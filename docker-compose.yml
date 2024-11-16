@@ -1,0 +1,27 @@
+version: '3.4'
+services:
+  linuxgsm-sdtd:
+    image: gameservermanagers/gameserver:sdtd
+    container_name: sdtdserver
+    restart: unless-stopped
+    volumes:
+      - linuxgsm-sdtd:/data
+    #network_mode: host
+    stop_grace_period: 30s
+    ports:
+      - "26900:26900/tcp"
+      - "26900:26900/udp"
+      - "26901:26901/udp"
+      - "26902:26902/udp"
+      - "8080:8080/tcp"
+    expose:
+      - "25575/tcp"
+    secrets:
+      - server_password
+
+secrets:
+  server_password:
+    file: ./server_password.txt
+
+volumes:
+  linuxgsm-sdtd:
